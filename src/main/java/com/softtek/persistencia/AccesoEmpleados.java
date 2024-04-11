@@ -90,6 +90,34 @@ public class AccesoEmpleados extends Conexion{
         return empleados;
     }
 
+    public void actualizarEmpleado(Empleado empleado) {
+        try {
+            String sql = "UPDATE employees SET first_name = ?, last_name = ? WHERE employee_id = ?";
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            statement.setString(1, empleado.getNombre());
+            statement.setString(2, empleado.getApellidos());
+            statement.setInt(3, empleado.getIdEmpleado());
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error al actualizar el empleado.");
+        }
+    }
+
+    public void eliminarEmpleado(Empleado empleado) {
+        try {
+            String sql = "DELETE FROM employees WHERE employee_id = ?";
+            PreparedStatement statement = conexion.prepareStatement(sql);
+            statement.setInt(1, empleado.getIdEmpleado());
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error al eliminar el empleado.");
+        }
+    }
+
     // Otros métodos para actualizar y eliminar empleados
 
     // No necesitas cerrar la conexión aquí si ya tienes una clase que maneja la apertura y cierre de la conexión.
